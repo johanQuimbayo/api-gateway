@@ -31,7 +31,7 @@ public class AuditClient implements IAuditClient {
         String token = originalRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/messages/byIdEntidad/{idEntidad}")
+                        .path("/api/messages/byIdEntidad/{idEntidad}")
                         .queryParam("page", pageable.getPageNumber())
                         .queryParam("size", pageable.getPageSize())
                         .build(idEntidad))
@@ -46,7 +46,7 @@ public class AuditClient implements IAuditClient {
         String token = originalRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/messages/byRecurso/{recurso}")
+                        .path("/api/messages/byRecurso/{recurso}")
                         .queryParam("page", pageable.getPageNumber())
                         .queryParam("size", pageable.getPageSize())
                         .build(recurso))
