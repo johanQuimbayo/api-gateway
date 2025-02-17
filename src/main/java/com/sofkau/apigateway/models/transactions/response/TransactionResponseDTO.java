@@ -19,4 +19,5 @@ public class TransactionResponseDTO {
     private BigDecimal amount;
     private BigDecimal finalBalance;
     private String status;
+    private String timestamp;
 }
