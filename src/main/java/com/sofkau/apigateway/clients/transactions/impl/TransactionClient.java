@@ -43,7 +43,6 @@ public class TransactionClient implements ITransactionClient {
                         .path("/api/transactions/stream")
                         .queryParam("accountId", accountId)
                         .build())
-                .header(HttpHeaders.AUTHORIZATION, token)
                 .retrieve()
                 .bodyToMono(TransactionResponseDTO.class)
                 .onErrorResume(ex -> Mono.error(new RuntimeException("Error al obtener transacciones: " + ex.getMessage())));
