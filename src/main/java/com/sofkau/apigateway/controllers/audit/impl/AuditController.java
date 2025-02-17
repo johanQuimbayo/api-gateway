@@ -17,7 +17,7 @@ import org.springframework.data.domain.Pageable;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/api/messages")
 public class AuditController implements IAuditController {
 
     @Autowired
