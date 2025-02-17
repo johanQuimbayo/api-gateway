@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -36,15 +36,14 @@ public class TransactionClient implements ITransactionClient {
     }
 
     @Override
-    public Mono<TransactionResponseDTO> streamTransactions(String accountId, ServerHttpRequest originalRequest) {
-        String token = originalRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+    public Flux<TransactionResponseDTO> streamTransactions(String accountId) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/transactions/stream")
                         .queryParam("accountId", accountId)
                         .build())
                 .retrieve()
-                .bodyToMono(TransactionResponseDTO.class)
+                .bodyToFlux(TransactionResponseDTO.class)
                 .onErrorResume(ex -> Mono.error(new RuntimeException("Error al obtener transacciones: " + ex.getMessage())));
     }
 }

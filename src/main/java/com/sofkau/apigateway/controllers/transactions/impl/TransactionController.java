@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
@@ -27,8 +28,8 @@ public class TransactionController implements ITransactionController {
 
     @Override
     @GetMapping("/stream")
-    public Mono<TransactionResponseDTO> streamTransactions(@RequestParam("accountId") String accountId, ServerHttpRequest originalRequest) {
-        return transactionClient.streamTransactions(accountId, originalRequest);
+    public Flux<TransactionResponseDTO> streamTransactions(@RequestParam("accountId") String accountId) {
+        return transactionClient.streamTransactions(accountId);
     }
 
 }
