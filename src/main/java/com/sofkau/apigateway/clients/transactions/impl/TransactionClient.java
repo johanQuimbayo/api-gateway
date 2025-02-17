@@ -2,6 +2,7 @@ package com.sofkau.apigateway.clients.transactions.impl;
 
 import com.sofkau.apigateway.clients.transactions.ITransactionClient;
 import com.sofkau.apigateway.models.transactions.request.TransactionRequestDTO;
+import com.sofkau.apigateway.models.transactions.response.TransactionResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public class TransactionClient implements ITransactionClient {
 
 
     @Override
-    public Mono<ServerResponse> performTransaction(TransactionRequestDTO transactionRequestDTO, ServerHttpRequest originalRequest) {
+    public Mono<TransactionResponseDTO> performTransaction(TransactionRequestDTO transactionRequestDTO, ServerHttpRequest originalRequest) {
         String token = originalRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         return webClient.post()
                 .uri("/api/transactions") // Ruta del servicio
@@ -30,12 +31,12 @@ public class TransactionClient implements ITransactionClient {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(transactionRequestDTO)
                 .retrieve()
-                .bodyToMono(ServerResponse.class)
+                .bodyToMono(TransactionResponseDTO.class)
                 .onErrorResume(ex -> Mono.error(new RuntimeException("Error en la transacción: " + ex.getMessage())));
     }
 
     @Override
-    public Mono<ServerResponse> streamTransactions(String accountId, ServerHttpRequest originalRequest) {
+    public Mono<TransactionResponseDTO> streamTransactions(String accountId, ServerHttpRequest originalRequest) {
         String token = originalRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -44,7 +45,7 @@ public class TransactionClient implements ITransactionClient {
                         .build())
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .retrieve()
-                .bodyToMono(ServerResponse.class)
+                .bodyToMono(TransactionResponseDTO.class)
                 .onErrorResume(ex -> Mono.error(new RuntimeException("Error al obtener transacciones: " + ex.getMessage())));
     }
 }

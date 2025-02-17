@@ -1,11 +1,11 @@
 package com.sofkau.apigateway.clients.transactions;
 
 import com.sofkau.apigateway.models.transactions.request.TransactionRequestDTO;
+import com.sofkau.apigateway.models.transactions.response.TransactionResponseDTO;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 public interface ITransactionClient {
-    Mono<ServerResponse> performTransaction(TransactionRequestDTO transactionRequestDTO, ServerHttpRequest originalRequest);
-    Mono<ServerResponse> streamTransactions(String accountId, ServerHttpRequest originalRequest);
+    Mono<TransactionResponseDTO> performTransaction(TransactionRequestDTO transactionRequestDTO, ServerHttpRequest originalRequest);
+    Mono<TransactionResponseDTO> streamTransactions(String accountId, ServerHttpRequest originalRequest);
 }
