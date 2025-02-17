@@ -27,7 +27,7 @@ public class TransactionController implements ITransactionController {
 
     @Override
     @GetMapping("/stream")
-    public Mono<TransactionResponseDTO> streamTransactions(@PathVariable("accountId") String accountId, ServerHttpRequest originalRequest) {
+    public Mono<TransactionResponseDTO> streamTransactions(@RequestParam("accountId") String accountId, ServerHttpRequest originalRequest) {
         return transactionClient.streamTransactions(accountId, originalRequest);
     }
 
